@@ -1,4 +1,5 @@
 # Web scraper for VOA News - learningenglish.voanews.com
+# "Learning English texts, MP3s and videos are in the public domain. You are allowed to reprint them for educational and commercial purposes, with credit to learningenglish.voanews.com"
 
 from urllib.request import urlopen
 from urllib.error import HTTPError
@@ -99,6 +100,8 @@ def getText(link):  # this "link" object argument will be updated with the text 
             bs = BeautifulSoup(html.read(), 'html.parser')
             paragraphs = bs.find('div',{'id':'article-content'}).div.find_all('p')
 
+            paragraphs = paragraphs[1:]  # trim off the first sentence, which usually is just "No media source currently available"
+
             link['text'] = ''
 
             for p in paragraphs:
@@ -142,7 +145,7 @@ for url in topicUrls:
 textObjects = [getText(link) for link in allLinks]
 
 #3. SEND TO FILE:
-makeFile(textObjects, "data.json")
+makeFile(textObjects, "data2.json")
 
 
 
